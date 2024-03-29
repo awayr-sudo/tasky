@@ -1,0 +1,70 @@
+<?php
+
+namespace common\models;
+
+use Yii;
+use yii\base\Model;
+use common\models\Users;
+
+
+/**
+ * Login form
+ */
+class LoginForm extends Model
+{
+    public $username;
+    public $password;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            // username and password are both required
+            [['username', 'password'], 'required'],
+            // password is validated by validatePassword()
+            ['password', 'validatePassword'],
+        ];
+    }
+
+    /**
+     * Validates the password.
+     * This method serves as the inline validation for password.
+     *
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
+     */
+    public function validatePassword($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $users = $this->getUser();
+            if (!$users || !$users->validatePassword($this->password)) {
+                $this->addError($attribute, 'Incorrect username or password.');
+            }
+        }
+    }
+
+    /**
+     * Logs in a user using the provided username and password.
+     *
+     * @return bool whether the user is logged in successfully
+     */
+    public function login()
+    {
+        if ($this->validate()) {
+            return Users::login($this->username, $this->password);
+        }
+        return false;
+    }
+
+    /**
+     * Finds user by [[username]]
+     *
+     * @return Users|null
+     */
+    protected function getUser()
+    {
+        return Users::find()->where(['username' => $this->username])->one();
+    }
+}

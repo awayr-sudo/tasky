@@ -1,0 +1,43 @@
+html,
+body{
+
+
+    height: 100%;
+}
+main{
+
+    flex: 1;
+}
+
+.content-wrapper{
+
+flex: 1;
+
+}
+aside{
+
+width: 200px;
+
+}
+aside .flex-column .nav-item .nav-link {
+    border-radius: 0;
+    color: #444444;
+}
+
+aside .flex-column .nav-item .nav-link:hover{
+    background: rgba(0, 0, 0, 0.05);
+}
+
+aside .flex-column .nav-item .nav-link.active {
+    background: rgba(0, 0, 0, 0.05);
+    color: #0077b6;
+    border-left: 4px solid #0077b6;
+}
+.bg-ocean-blue {
+    background-color: #0077b6; 
+}
+.text-white {
+    color: #ffffff; 
+}
+
+
