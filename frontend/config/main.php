@@ -58,7 +58,7 @@ return [
             'rules' => [
                
               
-                ['class' => 'yii\rest\UrlRule',  'controller' => ['v1/User','v1/Project','v1/Table_lists','v1/Attendance']],
+                ['class' => 'yii\rest\UrlRule',  'controller' => ['v1/User','v1/Project','v1/Table_lists','v1/Attendance','pluralize' => true]],
             ],
         ],
         
