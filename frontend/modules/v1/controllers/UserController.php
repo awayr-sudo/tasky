@@ -18,19 +18,28 @@ use yii\helpers\ArrayHelper;
  */
 class UserController extends ActiveController
 {
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::class,
+        ];
+        return $behaviors;
+    }
     /**
      * Renders the index view for the module
      * @return string
      */
     public $modelClass = "common\models\User";
-    
+
     public function actionLogin()
     {
         \Yii::$app->response->format = Response::FORMAT_JSON;
 
-        $request = \Yii::$app->request;
-        $username = $request->post('username');
-        $password = $request->post('password');
+        // $request = \Yii::$app->request;
+        $data = \Yii::$app->getRequest()->getBodyParams();
+        $username = $data['email'];
+        $password = $data['password'];
 
         $user = User::findByUsername($username);
         if ($user && $user->validatePassword($password)) {
@@ -39,11 +48,11 @@ class UserController extends ActiveController
             return ['status' => 'error', 'message' => 'Invalid username or password'];
         }
     }
-  
+
 
     // public function behaviors()
     // {
-      
+
     //     $behaviors = parent::behaviors();
     //     $behaviors['authenticator']=[
     //         //    'class'=>\yii\filters\auth\HttpBearerAuth::class
@@ -58,5 +67,5 @@ class UserController extends ActiveController
     // }
 
 
-   
+
 }
