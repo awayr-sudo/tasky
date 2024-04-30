@@ -35,8 +35,6 @@ class UserController extends ActiveController
     public function actionLogin()
     {
         \Yii::$app->response->format = Response::FORMAT_JSON;
-
-        // $request = \Yii::$app->request;
         $data = \Yii::$app->getRequest()->getBodyParams();
         $username = $data['email'];
         $password = $data['password'];
